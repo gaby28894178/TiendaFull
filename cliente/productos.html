@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="main.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-300 flex flex-col">
+
+    <header class="bg-gradient-to-r from-purple-800 to-purple-600 text-white fixed top-0 left-0 w-full z-50 w-4">
+        <div class="flex items-center justify-between p-2">
+            <div class="flex items-center">
+                <a href="index.html" class="p-2">
+                    <i class='bx bx-home-alt-2 bx-lg text-white mt-1'>
+                        <span class="text-yellow-300">Easy</span>Shop                  
+                    </i>
+                </a>
+            </div>
+            
+            <div class="flex items-center md:hidden">
+                <button id="menu-toggle" class="focus:outline-none">
+                    <i class='bx bx-menu bx-lg'></i>
+                </button>
+            </div>
+            <nav class="hidden md:flex md:grow">
+                <ul class="flex justify-center space-x-6">
+                    <li><a class="hover:text-gray-300" href="index.html">Tiendas</a></li>
+                    <li><a class="hover:text-gray-300" href="productos.html">Productos</a></li>
+                    <li><a href="login.html" class="hover:text-gray-300">Login</a></li>
+                </ul>
+            </nav>
+            <div class="flex items-center">
+                <a href="carrito.html" class="p-2">
+                    <i class='bx bx-package p-2 bx-sm'></i>
+                    <span id="contador"></span> 
+                    <i class='bx bx-cart-download bx-lg'></i>
+                </a>
+            </div>
+        </div>
+        <nav id="mobile-menu" class="md:hidden hidden">
+            <ul class="flex flex-col space-y-2 p-2">
+                <li><a class="hover:text-gray-300" href="index.html">Tiendas</a></li>
+                <li><a class="hover:text-gray-300" href="productos.html">Productos</a></li>
+                <li><a href="#" class="hover:text-gray-300">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-grow container mx-auto p-4 text-center flex -ml-4">
+        <aside class="w-2/2 bg-white rounded-lg shadow-md p-6 mr-6 -ml-13  bg-gradient-to-r from-purple-800 to-purple-600 text-white  mt-14 -mb-12  -h-6">
+            <h3 class="text-xl font-bold mb-2 ">Filtrar Productos</h3>
+            
+            <label for="categoria" class="block mt-4">Categoría</label>
+            <select id="categoria" class="border rounded p-1 mb-3 mt-6 w-full bg-red-400">
+                <option class="text-gray-800" value="" disabled selected>Opción Buscar</option>
+                <option class="text-gray-800" value="camperas">Camperas</option>
+                <option class="text-gray-800" value="remeras">Remeras</option>
+                <option class="text-gray-800" value="pantalones">Pantalones</option>
+                <option class="text-gray-800" value="busos">Busos</option>
+            </select>
+            
+            
+            <div class="flex flex-col items-center mt-14 text-white">
+                <label for="precio" class="text-gray-100">Selecciona un rango de precio:</label>
+                <input id="precio" type="range" min="0" max="5000000" value="0" class="w-full mt-2">
+                <div class="flex justify-between w-full mt-2">
+                    <span class="text-white">$0</span>
+                    <span class="text-white">$15000</span>
+                    <span class="text-white">$25000</span>
+                    <span class="text-white">$30000</span>
+                </div>
+                <div class="mt-2 text-white" id="precio-valor">$0</div>
+            </div>
+            
+            
+            <script>
+                const slider = document.getElementById("precio");
+                const output = document.getElementById("precio-valor");
+        
+                slider.oninput = function() {
+                    let value = this.value;
+                    let rangeText = "";
+        
+                    if (value <= 15000) {
+                        rangeText = "$0 - $15000";
+                    } else if (value <= 31000) {
+                        rangeText = "$15001 - $30000"; // Corrige el valor aquí
+                    } else if (value <= 50000) {
+                        rangeText = "$30001 - $50000"; // Corrige el valor aquí
+                    } else {
+                        rangeText = "$50001 o más"; // Corrige el valor aquí
+                    }
+        
+                    output.innerText = rangeText;
+                };
+
+                
+            </script>
+            
+        </aside>
+
+        <div class="flex-grow mt-12 p-2 ">
+            <h2 class="text-3xl font-bold mt-4">Productos</h2>
+            <section>
+                <article>
+                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit nam assumenda fugiat. Necessitatibus, iure illum blanditiis molestiae, itaque culpa asperiores ea eum maxime consequuntur, exercitationem excepturi ipsa aspernatur nobis? A?</p>
+                </article>
+            </section>
+            <section>
+                <div id="contenedor-productos" class="flex flex-wrap justify-center p-4 m-4 sm:w-auto"></div>
+
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-gradient-to-r from-purple-800 to-purple-600 text-white text-center p-4">
+        <h2>El footer</h2>
+    </footer>
+<script>
+    //creo produtos en un array 
+    const productos = [
+        { id: 1, nombre: "Producto 1", descripcion: "Descripción del Producto 1", stock: 10, precio: 100,
+         urlImagen: "https://cdn.pixabay.com/photo/2024/08/19/02/29/orange-8979311_1280.jpg" , cantidad: 1},
+        { id: 2, nombre: "Producto 2", descripcion: "Descripción del Producto 2", stock: 5, precio: 222,
+         urlImagen: "https://cdn.pixabay.com/photo/2024/08/19/02/29/orange-8979311_1280.jpg",cantidad:1 },
+        { id: 3, nombre: "Producto 3", descripcion: "Descripción del Producto 3", stock: 0, precio: 300, 
+        urlImagen: "https://cdn.pixabay.com/photo/2024/08/19/02/29/orange-8979311_1280.jpg",cantidad:1 }
+    ];
+    
+    // meto el producto en el storage la memoria de el navegador 
+    const productosGuardados = JSON.parse(localStorage.getItem('productos'));
+
+    // meto el producto de el localstorage en la variable carrito como un array  vacio si no tiene nada 
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    console.log(carrito)
+
+    
+        // Función para mostrar productos en tarjetas
+        function mostrarProductos(productos) {
+            const contenedor = document.getElementById('contenedor-productos');
+            contenedor.innerHTML = '';
+    
+            productos.forEach(producto => {
+                const tarjeta = document.createElement('div');
+                tarjeta.className = 'tarjeta border p-4 m-2 rounded shadow';
+    
+                tarjeta.innerHTML = `
+                    <img src="${producto.urlImagen}" alt="${producto.nombre}" class="h-64 w-full object-cover">
+                    <h2 class="text-lg font-bold">${producto.nombre}</h2>
+                    <p class="text-gray-600">${producto.descripcion}</p>
+                    <p class="font-semibold">$${producto.precio}</p>
+                    <p class="text-red-500">Stock: ${producto.stock}</p>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded" onclick="añadirAlCarrito(${producto.id})">Añadir al carrito</button>
+                `;
+    
+                contenedor.appendChild(tarjeta);
+
+
+
+
+            });
+        }
+    
+        // Función para añadir un producto al carrito
+        function añadirAlCarrito(id) {
+            const producto = productos.find(p => p.id === id);
+            if (producto) {
+                carrito.push(producto); // Agrega el producto al carrito
+                localStorage.setItem('carrito', JSON.stringify(carrito)); // Guarda el carrito en localStorage
+                // alert(`${producto.nombre} ha sido añadido al carrito!`);
+                Swal.fire({
+                title: '¡Producto Agregado!',
+                text: 'El producto ha sido agregado a tu carrito.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                timer: 5000 // Cierra automáticamente después de 3 segundos
+            });
+
+
+
+            }
+        }
+    
+        // Mostrar productos al cargar la página
+        if (productosGuardados) {
+            mostrarProductos(productosGuardados);
+        }
+    </script>
+</body>
+</html>
